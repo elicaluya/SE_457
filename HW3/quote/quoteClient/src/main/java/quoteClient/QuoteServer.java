@@ -17,11 +17,11 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "Quote", targetNamespace = "http://quoteServer/")
+@WebService(name = "QuoteServer", targetNamespace = "http://quoteServer/")
 @XmlSeeAlso({
     ObjectFactory.class
 })
-public interface Quote {
+public interface QuoteServer {
 
 
     /**
@@ -33,7 +33,7 @@ public interface Quote {
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getQuote", targetNamespace = "http://quoteServer/", className = "quoteClient.src.main.java.quoteClient.GetQuote")
     @ResponseWrapper(localName = "getQuoteResponse", targetNamespace = "http://quoteServer/", className = "quoteClient.src.main.java.quoteClient.GetQuoteResponse")
-    @Action(input = "http://quoteServer/Quote/getQuoteRequest", output = "http://quoteServer/Quote/getQuoteResponse")
+    @Action(input = "http://quoteServer/QuoteServer/getQuoteRequest", output = "http://quoteServer/QuoteServer/getQuoteResponse")
     public String getQuote();
 
     /**
@@ -43,7 +43,7 @@ public interface Quote {
     @WebMethod
     @RequestWrapper(localName = "addQuote", targetNamespace = "http://quoteServer/", className = "quoteClient.src.main.java.quoteClient.AddQuote")
     @ResponseWrapper(localName = "addQuoteResponse", targetNamespace = "http://quoteServer/", className = "quoteClient.src.main.java.quoteClient.AddQuoteResponse")
-    @Action(input = "http://quoteServer/Quote/addQuoteRequest", output = "http://quoteServer/Quote/addQuoteResponse")
+    @Action(input = "http://quoteServer/QuoteServer/addQuoteRequest", output = "http://quoteServer/QuoteServer/addQuoteResponse")
     public void addQuote(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
