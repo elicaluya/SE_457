@@ -10,5 +10,21 @@
 	<classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-core/1.17/jersey-core-1.17.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-servlet/1.17/jersey-servlet-1.17.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-client/1.17/jersey-client-1.17.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/cxf-core-3.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/cxf-rt-frontend-jaxrs-3.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/cxf-rt-security-3.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/cxf-rt-transports-http-3.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/FastInfoset-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/istack-commons-runtime-3.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/jakarta.activation-api-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/jakarta.ws.rs-api-2.1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/jakarta.xml.bind-api-2.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/javax.annotation-api-1.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/jaxb-runtime-2.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/stax2-api-3.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/stax-ex-1.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/txw2-2.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/woodstox-core-5.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/org_apache/xmlschema-core-2.2.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

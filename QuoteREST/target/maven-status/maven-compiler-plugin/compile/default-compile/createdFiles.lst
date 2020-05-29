@@ -1,2 +1,3 @@
-Quote\GetHandler.class
+Quote\QuoteService$QuoteObject.class
 Quote\QuoteService.class
+Quote\QuoteService$RestService.class
