@@ -3,12 +3,14 @@ package Quote;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -20,28 +22,66 @@ public class QuoteService {
 	
 	@XmlRootElement
 	public static class QuoteObject {
+		@XmlElement(name ="id")
 		int id;
+		@XmlElement(name="quote")
 		String quote;
 	}
 	
 	static ArrayList<QuoteObject> list = new ArrayList<>();
+	static int currentID = 0;
 	
 	@Path("/quotes")
 	public static class RestService{
 		
 		@GET
 		@Path("/get/{id}")
-		public QuoteObject getQuoteById(@PathParam("id") int id) {
+		public Response getQuoteById(@PathParam("id") int id) {
+			QuoteObject qo = get(id);
+			if (qo == null) {
+				return Response.status(Response.Status.OK).entity("Quote Object " + id + " not in list").build();
+			}
+			return Response.status(Response.Status.OK).entity(qo).build();
+		}
+		
+		@GET
+		@Path("/add/{quote}")
+		public Response addQuote(@PathParam("quote") String quote) {
+			QuoteObject qo = new QuoteObject();
+			int id = currentID + 1;
+			qo.id = id;
+			qo.quote = quote;
+			list.add(qo);
+			currentID++;
+			return Response.status(Response.Status.OK).entity("Quote Object added: " + qo.id + ": " + qo.quote).build();
+		}
+		
+		@GET
+		@Path("/delete/{id}")
+		public Response deleteQuote(@PathParam("id") int id) {
+			if (get(id) == null) {
+				return Response.status(Response.Status.OK).entity("Quote Object " + id + " not deleted").build();
+			}
+			remove(id);
+			return Response.status(Response.Status.OK).entity("Quote Object " + id + " deleted").build();
+		}
+		
+		
+		public QuoteObject get(int id) {
 			QuoteObject qo = null;
+			
 			for (QuoteObject q : list) {
 				if (q.id == id)
 					qo = q;
 			}
-			if (qo == null)
-				System.out.println("QuoteObject not found");
-			else
-				System.out.println("QuoteObject requested: " + qo.id + " " + qo.quote);
 			return qo;
+		}
+		
+		public void remove(int id) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).id == id)
+					list.remove(i);
+			}
 		}
 	}
 	
@@ -55,6 +95,8 @@ public class QuoteService {
 		list.add(q2);
 		list.add(q3);
 		list.add(q4);
+		
+		currentID = list.get(list.size()-1).id;
 		
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 		sf.setResourceClasses(RestService.class);
