@@ -1,10 +1,13 @@
 package Quote;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +20,7 @@ import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 
 
-@Produces("application/json")
+@Produces(MediaType.APPLICATION_JSON)
 public class QuoteService {
 	
 	@XmlRootElement
@@ -28,6 +31,7 @@ public class QuoteService {
 		String quote;
 	}
 	
+	@XmlElement
 	static ArrayList<QuoteObject> list = new ArrayList<>();
 	static int currentID = 0;
 	
@@ -44,7 +48,21 @@ public class QuoteService {
 			return Response.status(Response.Status.OK).entity(qo).build();
 		}
 		
+//		@GET
+//		@Path("/getAll")
+//		public List<QuoteObject> getQAllQuotes() {
+//			return list;
+//		}
+		
 		@GET
+		@Path("/getAll?page={page}&?per_page={per}")
+		public List<QuoteObject> getQAllQuotesPage(@PathParam("page") int page, @PathParam("per") int per) {
+			System.out.println("page: " + page + " per: " + per);
+			
+			return list;
+		}
+		
+		@POST
 		@Path("/add/{quote}")
 		public Response addQuote(@PathParam("quote") String quote) {
 			QuoteObject qo = new QuoteObject();
@@ -56,14 +74,24 @@ public class QuoteService {
 			return Response.status(Response.Status.OK).entity("Quote Object added: " + qo.id + ": " + qo.quote).build();
 		}
 		
-		@GET
+		@DELETE
 		@Path("/delete/{id}")
 		public Response deleteQuote(@PathParam("id") int id) {
 			if (get(id) == null) {
-				return Response.status(Response.Status.OK).entity("Quote Object " + id + " not deleted").build();
+				return Response.status(Response.Status.OK).entity("Quote Object " + id + " not in list.").build();
 			}
 			remove(id);
 			return Response.status(Response.Status.OK).entity("Quote Object " + id + " deleted").build();
+		}
+		
+		@PUT
+		@Path("/update/{id}/{quote}")
+		public Response updateQuote(@PathParam("id") int id, @PathParam("quote")String quote) {
+			if (get(id) == null) {
+				return Response.status(Response.Status.OK).entity("Quote Object " + id + " not in list.").build();
+			}
+			get(id).quote = quote;
+			return Response.status(Response.Status.OK).entity("Quote Object Updated: " + get(id).id + ": " + get(id).quote).build();
 		}
 		
 		
@@ -86,15 +114,17 @@ public class QuoteService {
 	}
 	
 	public static void main(String[] args) {
-		QuoteObject q1 = new QuoteObject(), q2 = new QuoteObject(), q3 = new QuoteObject(), q4 = new QuoteObject();
+		QuoteObject q1 = new QuoteObject(), q2 = new QuoteObject(), q3 = new QuoteObject(), q4 = new QuoteObject(), q5 = new QuoteObject();
 		q1.id = 1; q1.quote = "q1";
 		q2.id = 2; q2.quote = "q2";
 		q3.id = 3; q3.quote = "q3";
 		q4.id = 4; q4.quote = "q4";
+		q5.id = 5; q5.quote = "q5";
 		list.add(q1);
 		list.add(q2);
 		list.add(q3);
 		list.add(q4);
+		list.add(q5);
 		
 		currentID = list.get(list.size()-1).id;
 		
