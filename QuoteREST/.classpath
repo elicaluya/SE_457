@@ -26,5 +26,8 @@
 	<classpathentry kind="lib" path="C:/Program Files/org_apache/txw2-2.3.2.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/org_apache/woodstox-core-5.0.3.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/org_apache/xmlschema-core-2.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/JacksonJSON/jackson-databind-2.9.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/JacksonJSON/jackson-annotations-2.9.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/JacksonJSON/jackson-core-2.9.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
