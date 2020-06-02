@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 
@@ -30,7 +29,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 // Need to set the Produces annotation to JSON as specified in the instructions
 @Produces(MediaType.APPLICATION_JSON)
 public class QuoteService {
-	
 	
 	
 	// Quote Object with specified RootName and Property so that we can serialize the data and send it to client as a Response
@@ -50,7 +48,9 @@ public class QuoteService {
 	
 	
 /***************************************** Class with Functions for specific HTTP requests ****************************************/
-	@Path("/quotes")
+	
+	// Set path for REST service class with URI versioning as the API versioning strategy
+	@Path("/quotes/v1")
 	public static class RestService{
 		
 		// Method for making a get request for one specific quote via id.
@@ -115,14 +115,13 @@ public class QuoteService {
 			// Send to the client the Quote Objects in the specified range as a string in the Response entity so that it will be easy to see the data
 			return Response.status(Response.Status.OK).entity(payload).build(); 
 		}
-		
-		
+				
 		
 		
 		// Method for adding a new Quote Object to the quote list
 		// Use PathParam so we can create a specific path in which we need a quote to add to the list (Cannot leave quote empty in path or call will fail)
-		// Use PUT Annotation because we want an idempotent request so that we do not see multiples of the same quote
-		@PUT
+		// Use POST Annotation because we are creating new resource at this specific path
+		@POST
 		@Path("/add/{quote}")
 		public Response addQuote(@PathParam("quote") String quote) throws IOException {
 			// Create new Quote Object and fill in its data with the given quote and updated ID in the list
@@ -223,11 +222,11 @@ public class QuoteService {
 					q4 = new QuoteObject(), 
 					q5 = new QuoteObject();
 		
-		q1.id = 1; q1.quote = "q1";
-		q2.id = 2; q2.quote = "q2";
-		q3.id = 3; q3.quote = "q3";
-		q4.id = 4; q4.quote = "q4";
-		q5.id = 5; q5.quote = "q5";
+		q1.id = 1; q1.quote = "Life is what happens when you're busy making other plans. -John Lennon";
+		q2.id = 2; q2.quote = "Those who dare to fail miserably can achieve greatly. -John F. Kennedy";
+		q3.id = 3; q3.quote = "Let us always meet each other with a smile, for the smile is the beginning of love. -Mother Theresa";
+		q4.id = 4; q4.quote = "It's our choices, that show what we truly are, far more than our abilities. -J.K. Rowling";
+		q5.id = 5; q5.quote = "If you want to live a happy life, tie it to a goal, not to people or things. -Albert Einstein";
 		
 		quote_list.add(q1);
 		quote_list.add(q2);
@@ -239,6 +238,7 @@ public class QuoteService {
 		currentID = quote_list.get(quote_list.size()-1).id;
 		
 		// Start up the REST Service on specified address
+		// Used the Jetty Server so that I can start up the service without the use of Tomcat or Glassfish
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 		sf.setResourceClasses(RestService.class);
 		sf.setResourceProvider(RestService.class, new SingletonResourceProvider(new RestService()));
